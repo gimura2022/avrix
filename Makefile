@@ -6,7 +6,7 @@ I = include
 B = build
 
 # drivers
-TTY_D   = null
+TTY_D   = uart
 SOUND_D = null
 VIDEO_D = null
 

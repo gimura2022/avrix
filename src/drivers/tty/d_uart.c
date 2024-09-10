@@ -21,7 +21,7 @@ void D_TTY_Init(void) {
 }
 
 void D_TTY_PutChar(char c, FILE* stream) {
-    if (c == '\n') D_UART_PutChar('\r', stream);
+    if (c == '\n') D_TTY_PutChar('\r', stream);
 
     loop_until_bit_is_set(UCSR0A, UDRE0);
     UDR0 = c;
