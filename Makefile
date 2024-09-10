@@ -5,6 +5,11 @@ S = src
 I = include
 B = build
 
+# drivers
+UART_D  = null
+SOUND_D = null
+VIDEO_D = null
+
 # device settings
 DEVICE   = atmega328p
 PLATFORM = arduino 
@@ -38,8 +43,14 @@ debug: kernel.elf
 	simavr -g -m $(DEVICE) kernel.elf
 
 # kernel compilation
+# drivers objects
+KERNEL_DRIVERS = $(S)/drivers/sound/d_$(SOUND_D).o \
+				 $(S)/drivers/uart/d_$(UART_D).o   \
+				 $(S)/drivers/video/d_$(VIDEO_D).o \
+
 # objects for compilation
-KERNEL_OBJ = $(S)/k_main.o
+KERNEL_OBJ = $(S)/k_main.o    \
+			 $(KERNEL_DRIVERS)
 
 kernel.hex: kernel.elf
 	rm -f kernel.hex
