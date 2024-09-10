@@ -6,7 +6,7 @@ I = include
 B = build
 
 # drivers
-UART_D  = null
+TTY_D   = null
 SOUND_D = null
 VIDEO_D = null
 
@@ -45,7 +45,7 @@ debug: kernel.elf
 # kernel compilation
 # drivers objects
 KERNEL_DRIVERS = $(S)/drivers/sound/d_$(SOUND_D).o \
-				 $(S)/drivers/uart/d_$(UART_D).o   \
+				 $(S)/drivers/tty/d_$(TTY_D).o   \
 				 $(S)/drivers/video/d_$(VIDEO_D).o \
 
 # objects for compilation
