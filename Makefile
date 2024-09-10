@@ -6,7 +6,7 @@ I = include
 B = build
 
 # drivers
-TTY_D   = uart
+TTY_D   = hd44780
 SOUND_D = null
 VIDEO_D = null
 
@@ -25,7 +25,7 @@ C            = avr-gcc
 # util commands
 AVRDUDE = $(AVRDUDE_EXE) -C $(AVRDUDE_CONF) -v -V -p $(DEVICE) -c $(PLATFORM) -P $(PORT) -b115200 -D
 COMPILE = $(C) -Wall -Os -g                                                          \
-          -DF_CPU=$(CLOCK) -DTTY_D=$(TTY_D) -DSOUND_D=$(SOUND_D) -VIDEO_D=$(VIDEO_D) \
+          -DF_CPU=$(CLOCK) -DTTY_D=$(TTY_D) -DSOUND_D=$(SOUND_D) -DVIDEO_D=$(VIDEO_D) \
 		  -mmcu=$(DEVICE) -std=c99 -I $(I)                                           \
 
 # command execution
