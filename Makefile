@@ -5,22 +5,29 @@ S = src
 I = include
 B = build
 
-# drivers
-IN_D  = uart
-OUT_D = uart
+# --- device ---
+DEVICE   = atmega328p   # arduino uno chip
+PLATFORM = arduino      # arduino platform
+CLOCK    = 16000000     # clock speed
 
-ENABLED_DRIVERS = uart
+# --- dev ---
+PORT               = /dev/ttyUSB0                                   # programmator port
+ARDUINO_TOOLS_PATH = /home/gimura/arduino-1.8.15/hardware/tools/avr # path to arduino tools
 
-# device settings
-DEVICE   = atmega328p
-PLATFORM = arduino 
-CLOCK    = 16000000
-PORT     = /dev/ttyUSB0
+# --- drivers ---
+# default drivers
+IN_D  = uart # default text input driver
+OUT_D = uart # default text output driver
+
+# enabled drivers
+ENABLED_DRIVERS = uart # uart for input and output
+
+CONFIG = Makefile.default.config
+include $(CONFIG)
 
 # util path
-AVRDUDE_PATH = /home/gimura/arduino-1.8.15/hardware/tools/avr
-AVRDUDE_EXE  = $(AVRDUDE_PATH)/bin/avrdude
-AVRDUDE_CONF = $(AVRDUDE_PATH)/etc/avrdude.conf
+AVRDUDE_EXE  = $(ARDUINO_TOOLS_PATH)/bin/avrdude
+AVRDUDE_CONF = $(ARDUINO_TOOLS_PATH)/etc/avrdude.conf
 C            = avr-gcc
 
 # defines
