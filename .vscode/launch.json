@@ -27,7 +27,7 @@
       "cwd": "${workspaceFolder}",
       "environment": [],
       "externalConsole": false,
-//      "preLaunchTask": "Debug server (simavr)"
+      "preLaunchTask": "Debug server (simavr)"
     },
     {
       "name": "C/C++ Runner: Debug Session",

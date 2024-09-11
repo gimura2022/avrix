@@ -6,9 +6,10 @@ I = include
 B = build
 
 # drivers
-TTY_D   = hd44780
-VIDEO_D = hd44780
-SOUND_D = null
+IN_D  = uart
+OUT_D = uart
+
+ENABLED_DRIVERS = uart
 
 # device settings
 DEVICE   = atmega328p
@@ -22,11 +23,19 @@ AVRDUDE_EXE  = $(AVRDUDE_PATH)/bin/avrdude
 AVRDUDE_CONF = $(AVRDUDE_PATH)/etc/avrdude.conf
 C            = avr-gcc
 
+# defines
+ARCH    = -DF_CPU=$(CLOCK)
+
+DRIVERS = -DIN_D=$(IN_D)   \
+          -DOUT_D=$(OUT_D)
+
+DEFINES = $(ARCH) $(DRIVERS)
+
 # util commands
 AVRDUDE = $(AVRDUDE_EXE) -C $(AVRDUDE_CONF) -v -V -p $(DEVICE) -c $(PLATFORM) -P $(PORT) -b115200 -D
-COMPILE = $(C) -Wall -Os -g                                                          \
-          -DF_CPU=$(CLOCK) -DTTY_D=$(TTY_D) -DSOUND_D=$(SOUND_D) -DVIDEO_D=$(VIDEO_D) \
-		  -mmcu=$(DEVICE) -std=c99 -I $(I)                                           \
+COMPILE = $(C) -Wall -Os -g                \
+    	  $(DEFINES)                       \
+		  -mmcu=$(DEVICE) -std=c99 -I $(I) \
 
 # command execution
 
@@ -45,14 +54,16 @@ debug: kernel.elf
 	simavr -g -m $(DEVICE) kernel.elf
 
 # kernel compilation
-# drivers objects
-KERNEL_DRIVERS = $(S)/drivers/sound/d_$(SOUND_D).o \
-				 $(S)/drivers/tty/d_$(TTY_D).o   \
-				 $(S)/drivers/video/d_$(VIDEO_D).o \
+# standart drivers
+INTERFACE_DRIVERS = $(S)/drivers/std/in/d_$(IN_D).o \
+                    $(S)/drivers/std/out/d_$(OUT_D).o
+
+ENABLED_DRIVERS_OBJ = $(foreach var,$(ENABLED_DRIVERS),$(S)/drivers/d_$(var).o)
 
 # objects for compilation
-KERNEL_OBJ = $(S)/k_main.o    \
-			 $(KERNEL_DRIVERS)
+KERNEL_OBJ = $(S)/k_main.o          \
+			 $(INTERFACE_DRIVERS)   \
+			 $(ENABLED_DRIVERS_OBJ)
 
 kernel.hex: kernel.elf
 	rm -f kernel.hex
