@@ -1,3 +1,4 @@
+# compiled files
 *.o
 *.elf
 *.hex
