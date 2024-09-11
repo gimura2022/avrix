@@ -27,6 +27,20 @@
 #define FINIT2 SECTION_FN(".finit2")
 #define FINIT1 SECTION_FN(".finit1")
 
+#define max(a, b) ({       \
+    typeof(a) __a = a;     \
+    typeof(b) __b = b;     \
+    __a > __b ? __a : __b; \
+})
+
+#define min(a, b) ({       \
+    typeof(a) __a = a;     \
+    typeof(b) __b = b;     \
+    __a < __b ? __a : __b; \
+})
+
+#define clamp(val, mi, ma) min(max(mi, val), ma)
+
 typedef uint8_t  u8;
 typedef uint16_t u16;
 typedef uint32_t u32;

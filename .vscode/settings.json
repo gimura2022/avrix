@@ -57,7 +57,8 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "io.h": "c"
+    "io.h": "c",
+    "d_hd44780.h": "c"
   },
   "makefile.makefilePath": "Makefile"
 }

@@ -7,8 +7,8 @@ B = build
 
 # drivers
 TTY_D   = hd44780
+VIDEO_D = hd44780
 SOUND_D = null
-VIDEO_D = null
 
 # device settings
 DEVICE   = atmega328p
