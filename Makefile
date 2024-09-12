@@ -6,8 +6,9 @@ I = include
 B = build
 
 # drivers
-IN_D  = uart
-OUT_D = uart
+IN_D   = uart
+OUT_D  = uart
+NULL_D = null
 
 ENABLED_DRIVERS = uart
 
@@ -27,7 +28,8 @@ C            = avr-gcc
 ARCH    = -DF_CPU=$(CLOCK)
 
 DRIVERS = -DIN_D=$(IN_D)   \
-          -DOUT_D=$(OUT_D)
+          -DOUT_D=$(OUT_D) \
+		  -DNULL_D=$(NULL_D)
 
 DEFINES = $(ARCH) $(DRIVERS)
 
@@ -57,6 +59,7 @@ debug: kernel.elf
 # standart drivers
 INTERFACE_DRIVERS = $(S)/drivers/std/in/d_$(IN_D).o \
                     $(S)/drivers/std/out/d_$(OUT_D).o
+					$(S)/drivers/std/null/d_$(NULL_D).o
 
 ENABLED_DRIVERS_OBJ = $(foreach var,$(ENABLED_DRIVERS),$(S)/drivers/d_$(var).o)
 
