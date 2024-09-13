@@ -58,7 +58,9 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "io.h": "c",
-    "d_hd44780.h": "c"
+    "d_hd44780.h": "c",
+    "d_fs.h": "c",
+    "stdio.h": "c"
   },
   "makefile.makefilePath": "Makefile"
 }

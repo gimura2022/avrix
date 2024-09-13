@@ -9,6 +9,7 @@ B = build
 IN_D   = uart
 OUT_D  = uart
 NULL_D = null
+FS_D   = null
 
 ENABLED_DRIVERS = uart
 
@@ -57,9 +58,10 @@ debug: kernel.elf
 
 # kernel compilation
 # standart drivers
-INTERFACE_DRIVERS = $(S)/drivers/std/in/d_$(IN_D).o \
-                    $(S)/drivers/std/out/d_$(OUT_D).o
-					$(S)/drivers/std/null/d_$(NULL_D).o
+INTERFACE_DRIVERS = $(S)/drivers/std/in/d_$(IN_D).o     \
+                    $(S)/drivers/std/out/d_$(OUT_D).o   \
+					$(S)/drivers/std/null/d_$(NULL_D).o \
+					$(S)/drivers/std/fs/d_$(NULL_D).o   \
 
 ENABLED_DRIVERS_OBJ = $(foreach var,$(ENABLED_DRIVERS),$(S)/drivers/d_$(var).o)
 
