@@ -6,6 +6,7 @@
 
 #define SECTION(x) __attribute__((section(x)))
 #define NAKED      __attribute__((naked))
+#define PACKED     __attribute__((packed))
 
 #define NO_INIT SECTION(".noinit")
 #define EEPROM  SECTION(".eeprom")

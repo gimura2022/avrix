@@ -11,7 +11,7 @@ OUT_D  = uart
 NULL_D = null
 FS_D   = null
 
-ENABLED_DRIVERS = uart
+ENABLED_DRIVERS = d_uart fs/d_axfs fs/storage_d/d_ram
 
 # device settings
 DEVICE   = atmega328p
@@ -36,9 +36,10 @@ DEFINES = $(ARCH) $(DRIVERS)
 
 # util commands
 AVRDUDE = $(AVRDUDE_EXE) -C $(AVRDUDE_CONF) -v -V -p $(DEVICE) -c $(PLATFORM) -P $(PORT) -b115200 -D
-COMPILE = $(C) -Wall -Os -g                \
-    	  $(DEFINES)                       \
-		  -mmcu=$(DEVICE) -std=c99 -I $(I) \
+COMPILE = $(C) -Wall -O0 -ggdb              \
+    	  $(DEFINES)                          \
+		  -mmcu=$(DEVICE) -std=c99 -I $(I)    \
+		  -u vprintf -lprintf_flt -lm     \
 
 # command execution
 
@@ -56,6 +57,9 @@ clean: kernel_clean
 debug: kernel.elf
 	simavr -g -m $(DEVICE) kernel.elf
 
+emul: kernel.hex
+	simavr -t -m $(DEVICE) -f $(CLOCK) kernel.hex
+
 # kernel compilation
 # standart drivers
 INTERFACE_DRIVERS = $(S)/drivers/std/in/d_$(IN_D).o     \
@@ -63,12 +67,12 @@ INTERFACE_DRIVERS = $(S)/drivers/std/in/d_$(IN_D).o     \
 					$(S)/drivers/std/null/d_$(NULL_D).o \
 					$(S)/drivers/std/fs/d_$(NULL_D).o   \
 
-ENABLED_DRIVERS_OBJ = $(foreach var,$(ENABLED_DRIVERS),$(S)/drivers/d_$(var).o)
+ENABLED_DRIVERS_OBJ = $(foreach var,$(ENABLED_DRIVERS),$(S)/drivers/$(var).o)
+
+KERNEL_SRC_OBJ = $(S)/k_main.o
 
 # objects for compilation
-KERNEL_OBJ = $(S)/k_main.o          \
-			 $(INTERFACE_DRIVERS)   \
-			 $(ENABLED_DRIVERS_OBJ)
+KERNEL_OBJ = $(INTERFACE_DRIVERS) $(ENABLED_DRIVERS_OBJ) $(KERNEL_SRC_OBJ) 
 
 kernel.hex: kernel.elf
 	rm -f kernel.hex

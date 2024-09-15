@@ -60,7 +60,17 @@
     "io.h": "c",
     "d_hd44780.h": "c",
     "d_fs.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "eeprom.h": "c",
+    "common.h": "c",
+    "stdlib.h": "c",
+    "d_ram.h": "c",
+    "stat.h": "c",
+    "u_common.h": "c",
+    "d_axfs.h": "c",
+    "array": "c",
+    "string": "c",
+    "string_view": "c"
   },
   "makefile.makefilePath": "Makefile"
 }
