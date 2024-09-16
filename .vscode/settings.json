@@ -70,7 +70,8 @@
     "d_axfs.h": "c",
     "array": "c",
     "string": "c",
-    "string_view": "c"
+    "string_view": "c",
+    "d_uart.h": "c"
   },
   "makefile.makefilePath": "Makefile"
 }

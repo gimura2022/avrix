@@ -12,8 +12,6 @@
 #include <stdbool.h>
 
 int main(void) {
-    sei();
-
     D_IN_Init();
     D_OUT_Init();
     stdin = &d_in;
@@ -21,9 +19,5 @@ int main(void) {
 
     D_axfs_Init();
 
-    for (u8 i = 0; i < BLOCK_SIZE; i++) {
-        printf("0x%x\n", root_device[i]);
-    }
-
-    cli();
+    printf("Hello, world\n!");
 }

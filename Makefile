@@ -11,7 +11,8 @@ OUT_D  = uart
 NULL_D = null
 FS_D   = null
 
-ENABLED_DRIVERS = d_uart fs/d_axfs fs/storage_d/d_ram
+ENABLED_DRIVERS = d_uart                       \
+                  fs/d_axfs fs/storage_d/d_ram \
 
 # device settings
 DEVICE   = atmega328p
@@ -36,10 +37,9 @@ DEFINES = $(ARCH) $(DRIVERS)
 
 # util commands
 AVRDUDE = $(AVRDUDE_EXE) -C $(AVRDUDE_CONF) -v -V -p $(DEVICE) -c $(PLATFORM) -P $(PORT) -b115200 -D
-COMPILE = $(C) -Wall -O0 -ggdb              \
+COMPILE = $(C) -Wall -O0 -ggdb                \
     	  $(DEFINES)                          \
 		  -mmcu=$(DEVICE) -std=c99 -I $(I)    \
-		  -u vprintf -lprintf_flt -lm     \
 
 # command execution
 
@@ -55,7 +55,7 @@ clean: kernel_clean
 #	mkdir $(B)
 
 debug: kernel.elf
-	simavr -g -m $(DEVICE) kernel.elf
+	simavr -g -t -m $(DEVICE) -f $(CLOCK) kernel.hex
 
 emul: kernel.hex
 	simavr -t -m $(DEVICE) -f $(CLOCK) kernel.hex
