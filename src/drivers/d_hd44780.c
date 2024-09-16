@@ -1,8 +1,13 @@
+#include <stdbool.h>
+
 #include "drivers/d_hd44780.h"
 
 #include <util/delay.h>
 
 void D_hd44780_Init(void) {
+    static bool inited = false;
+    if (inited) return;
+
     LCD_DIR = 0xff;
     _delay_ms(20);
 
@@ -13,6 +18,8 @@ void D_hd44780_Init(void) {
     D_hd44780_ClearDisplay();
 
     _delay_ms(2);
+
+    inited = true;
 }
 
 void D_hd44780_Command(u8 cmd) {
